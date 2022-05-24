@@ -9,6 +9,7 @@ Repository for learning Docker and Kubernetes.
 - A local online shop would have a monolithic architecture - that is, all parts of the application would exist on one server.
 
 ## Containerisation (with Docker)
+![Docker Architecture](./docker_architecture.svg)
 - Containerisation is the packaging of code and dependencies into an isolated, light-weight container, which can then be run on (ideally) ANY local machine.
 - A container doesn't contain anything more than an app and its running environment - whereas a virtual machine has an OS, CPU, etc. and is therefore much larger. 
 - In particular, containerisation is more useful for microservice architectures, whereas VMs are more useful for monolithic architectures.
