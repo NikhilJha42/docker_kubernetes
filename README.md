@@ -32,8 +32,8 @@ port the application runs on.)
 - Create a folder which stores the code for the node app, and then navigate to the `app` folder within it.
 - Create a `Dockerfile` - no extension.
 - Within the Docker file:
-- - `FROM node`
-  - `WORKDIR /usr/src/app`
+  - `FROM node
+  - WORKDIR /usr/src/app`
   - COPY package*.json ./
   - RUN npm install -g npm@latest
   - RUN npm install express
@@ -43,3 +43,19 @@ port the application runs on.)
 - In the app folder, run `docker build -t docker_hub_username/image_name:v#`, where `#` is some number; without this, the tag will default to latest.
 - If successful, run `docker run -d -p 80:3000 docker_hub_username/image_name:v#` (make sure port 80 is not already engaged).
 - Enter localhost in your browser, and the app homepage should be displayed.
+
+## Building custom production-ready docker image
+- Add `as app` after `FROM node` in the above.
+- Then add the following:
+  - # ###
+  - # Let's build multi-stage production ready code
+  - FROM node:alpine
+  - WORKDIR /usr/src/app
+  - COPY package*.json ./
+  - RUN npm install -g npm@latest
+  - RUN npm install express
+  - # This line of code compresses the image
+  - COPY --from=app /usr/src/app /usr/src/app
+  - EXPOSE 3000
+  - CMD ["node", "app.js"]
+- Then build using this dockerfile, and an image approx 25% the size should be created.
