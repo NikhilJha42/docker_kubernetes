@@ -60,5 +60,19 @@ port the application runs on.)
   - `CMD ["node", "app.js"]`
 - Then build using this dockerfile, and an image approx 25% the size should be created.
 
-## Kubernetes
+## Kubernetes (K8)
 ![Kubernetes Architecture](./diagrams/kubernetes.png)
+- To install K8:
+  - Open Docker console on computer
+  - In Settings, select Kubernetes
+  - Tick `Enable Kubernetes` - leave `Show system containers` unticked.
+  - Apply the changes.
+  - When the K8 symbol is green at the bottom left, it has finished installing.
+- To test installation, the command `kubectl` in the bash terminal should show a list of commands that can be utilised.
+- `kubectl get service` should show that a ClusterIP `kubernetes` is running
+
+### K8 terminology/concepts
+- Pods are the smallest possible unit of computing you can deploy in Kubernetes. These are a groups of containers with shared storage 
+space, network resources and a specification on how to run the containers.
+- A volume is a directory, possible with some data in it, that is accessible to all containers in a pod.
+- 
