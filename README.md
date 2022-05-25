@@ -75,4 +75,53 @@ port the application runs on.)
 - Pods are the smallest possible unit of computing you can deploy in Kubernetes. These are a groups of containers with shared storage 
 space, network resources and a specification on how to run the containers.
 - A volume is a directory, possible with some data in it, that is accessible to all containers in a pod.
-- 
+
+### Using K8 with node app
+![K8 node set up](./diagrams/kubernetes_node_set_up.png)
+- Create node-app-deploy.yml:
+```
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: node_app
+spec:
+  selector:
+    matchLabels:
+      app: node_app
+  replicas: 3 # Creates and maintains 3 containers to distribute load.
+  template:
+    metadata:
+      labels:
+        app: node_app
+    spec:
+      containers:
+        - name: node_app
+          image: njha42/eng110_node_app_prod
+
+          ports:
+            - containerPort: 3000
+
+          imagePullPolicy: Always
+```
+- create svc-node-app.yml
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: node_app
+  namespace: default
+spec:
+  ports:
+  - nodePort: 30442 # 30000 - 302222
+    port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: node_app
+  type: NodePort
+```
+- Run `kubectl create -f node-app-deploy.yml`
+- Run `kubectl create -f svc-node-app.yml`
+- Checkout localhost:3000 - you should be able to see the app homepage and /fibonacci/7
