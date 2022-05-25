@@ -61,4 +61,4 @@ port the application runs on.)
 - Then build using this dockerfile, and an image approx 25% the size should be created.
 
 ## Kubernetes
-![Kubernetes Architecture](./diagrams/kubernetes)
+![Kubernetes Architecture](./diagrams/kubernetes.png)
