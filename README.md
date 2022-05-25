@@ -124,4 +124,73 @@ spec:
 ```
 - Run `kubectl create -f node-app-deploy.yml`
 - Run `kubectl create -f svc-node-app.yml`
-- Checkout localhost:3000 - you should be able to see the app homepage and /fibonacci/7
+- Run `kubectl get svc` - this will show the port the app service is running on.
+- Checkout the port on your localhost - you should be able to see the app homepage and /fibonacci/`some_number`
+### Adding the mongo db
+![Node app set up with mongo](./diagrams/kubernetes_node_db_set_up.png)
+- Add env parameters under spec -> containers:
+```
+spec:
+  containers:
+    - name: node-app
+      image: njha42/eng110_node_app_prod
+      env: # Updating file to include DB_HOST env var
+        - name: DB_HOST
+          value: mongodb://mongo:27017/dev
+      ports:
+        - containerPort: 3000
+
+      imagePullPolicy: Always
+```
+- You will also need to create this mongo.yml file; note that this is essentially three .yml files
+in one:
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+spec:
+  selector:
+    app: mongo
+  ports:
+    - port: 27017
+      targetPort: 27017
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+spec:
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:3.6.17-xenial
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: storage
+              mountPath: /data/db
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: mongo-pvc
+ ```
+ - After you run these new files, you should be able to access the posts page of the app.
