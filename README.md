@@ -86,19 +86,19 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: node_app
+  name: node-app
 spec:
   selector:
     matchLabels:
-      app: node_app
+      app: node-app
   replicas: 3 # Creates and maintains 3 containers to distribute load.
   template:
     metadata:
       labels:
-        app: node_app
+        app: node-app
     spec:
       containers:
-        - name: node_app
+        - name: node-app
           image: njha42/eng110_node_app_prod
 
           ports:
@@ -111,7 +111,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: node_app
+  name: node-app
   namespace: default
 spec:
   ports:
@@ -120,7 +120,7 @@ spec:
     protocol: TCP
     targetPort: 3000
   selector:
-    app: node_app
+    app: node-app
   type: NodePort
 ```
 - Run `kubectl create -f node-app-deploy.yml`
@@ -195,3 +195,6 @@ spec:
             claimName: mongo-pvc
  ```
  - After you run these new files, you should be able to access the posts page of the app.
+
+### Alternative method
+- This will add Persistent Volume for db, and tweak the deploy-node-app.yml to include CPU and memory specs.
