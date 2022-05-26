@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: node-app
+spec:
+  selector:
+    matchLabels:
+      app: node-app
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: node-app
+    spec:
+      containers:
+        - name: node-app
+          image: njha42/eng110_node_app_prod
+          env:
+            - name: DB_HOST
+              value: mongodb://mongo:27017/dev
+          ports:
+            - containerPort: 3000
+
+          imagePullPolicy: Always
