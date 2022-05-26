@@ -76,7 +76,7 @@ port the application runs on.)
 - Pods are the smallest possible unit of computing you can deploy in Kubernetes. These are a groups of containers with shared storage 
 space, network resources and a specification on how to run the containers.
 - A volume is a directory, possible with some data in it, that is accessible to all containers in a pod.
-
+- Ephemeral volumes only exist for the lifetime of a pod, whereas a persistent volume will be kept until it is deleted.
 ### Using K8 with node app
 ![K8 node set up](./diagrams/kubernetes_node_set_up.png)
 - Create node-app-deploy.yml:
