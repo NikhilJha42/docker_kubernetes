@@ -7,7 +7,8 @@ Repository for learning Docker and Kubernetes.
 - This allows different parts of the network to be tested/debugged/changed without affecting the application until they are ready for deployment.
 - E.g., an online shop such as Amazon has a login page, different item categories, a basket, payment page, and databases to store information, which are all microservices.
 - A local online shop would have a monolithic architecture - that is, all parts of the application would exist on one server.
-
+- Advantage of microservices architecture - ensures constant deployment for customers whilst the application is updated and maintained.
+- Disadvantage: higher maintainance costs.
 ## Containerisation (with Docker)
 ![Docker Architecture](./diagrams/docker_architecture.svg)
 - Containerisation is the packaging of code and dependencies into an isolated, light-weight container, which can then be run on (ideally) ANY local machine.
